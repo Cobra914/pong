@@ -1,30 +1,55 @@
 import pygame
 
-pygame.init()
-pantalla = pygame.display.set_mode((800,600))
+ANCHO = 800
+ALTO = 600
 
-salir = False
+COLOR_FONDO = (0, 0, 0)
 
-while not salir:
-    # Bucle principal (main loop)
+class Pong:
 
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            print("Se ha cerrado la ventana")
-            salir = True
+    def __init__(self):
+        pygame.init()
+        self.pantalla = pygame.display.set_mode((ANCHO,ALTO))
 
-        print("Se ha producido un evento del tipo:", evento)
+    def jugar(self):
+        salir = False
+        cont = 0
 
-    # renderizar mis objetos
+        while not salir:
+            # Bucle principal (main loop)
 
-    # 1. borrar la pantalla
-    pygame.draw.rect(pantalla, (0, 0, 0), ((0,0), (800, 600)))
-    
-    # 2. pintar los objetos en su nueva posición
-    rectangulo = pygame.Rect(50, 100, 300, 150)
-    pygame.draw.rect(pantalla, (255, 255, 255), rectangulo)
+            cont = cont + 1
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    print("Se ha cerrado la ventana")
+                    salir = True
 
-    # mostrar los cambios en la pantalla
-    pygame.display.flip()
+                # print("Se ha producido un evento del tipo:", evento)
 
-pygame.quit()
+            # renderizar mis objetos
+
+            # 1. borrar la pantalla
+            pygame.draw.rect(self.pantalla, COLOR_FONDO, ((0,0), (ANCHO, ALTO)))
+            
+            # 2. pintar los objetos en su nueva posición
+            rectangulo = pygame.Rect(50, 100, 300, 150)
+            pygame.draw.rect(self.pantalla, (cont % 255, 68, 158), rectangulo)
+
+            # mostrar los cambios en la pantalla
+            pygame.display.flip()
+
+        pygame.quit()
+
+
+
+
+if __name__ == "__main__":
+    juego = Pong()
+    juego.jugar()
+
+
+
+
+
+
+
