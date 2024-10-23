@@ -8,20 +8,20 @@ MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
 COLOR_OBJETOS = (200, 200, 200)
-VEL_JUGADOR = 5
+VEL_JUGADOR = 2
 
 """
 J1: A,Z
 J2: ARR, ABJ
 """
 
-class Pintable:
+class Pintable(pygame.Rect):
 
     def __init__(self, x, y, ancho, alto):
-        self.rectangulo = pygame.Rect(x, y, ancho, alto)
+        super().__init__(x, y, ancho, alto)
 
     def pintame(self, pantalla):
-        pygame.draw.rect(pantalla, COLOR_OBJETOS, self.rectangulo)
+        pygame.draw.rect(pantalla, COLOR_OBJETOS, self)
 
 
 class Pelota(Pintable):
@@ -41,7 +41,12 @@ class Jugador(Pintable):
     def __init__(self, x):
         arriba = (ALTO - ALTO_PALA) / 2
         super().__init__(x, arriba, ANCHO_PALA, ALTO_PALA)
-        
+    
+    def subir(self):
+        self.y -= VEL_JUGADOR
+
+    def bajar(self):
+        self.y += VEL_JUGADOR
 
 class Pong:
 
@@ -60,6 +65,17 @@ class Pong:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT or (evento.type == pygame.KEYUP and evento.key == pygame.K_ESCAPE):
                     salir = True
+
+            # movimiento jugador    
+            estado_teclas = pygame.key.get_pressed()
+            if estado_teclas[pygame.K_a]:
+                self.jugador1.subir()
+            if estado_teclas[pygame.K_z]:
+                self.jugador1.bajar()
+            if estado_teclas[pygame.K_UP]:
+                self.jugador2.subir()
+            if estado_teclas[pygame.K_DOWN]:
+                self.jugador2.bajar()
 
             # renderizar mis objetos
 
