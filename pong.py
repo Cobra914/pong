@@ -8,6 +8,12 @@ MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
 COLOR_OBJETOS = (200, 200, 200)
+VEL_JUGADOR = 5
+
+"""
+J1: A,Z
+J2: ARR, ABJ
+"""
 
 class Pintable:
 
@@ -52,7 +58,7 @@ class Pong:
         while not salir:
             # Bucle principal (main loop)
             for evento in pygame.event.get():
-                if evento.type == pygame.QUIT:
+                if evento.type == pygame.QUIT or (evento.type == pygame.KEYUP and evento.key == pygame.K_ESCAPE):
                     salir = True
 
             # renderizar mis objetos
