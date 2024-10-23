@@ -1,9 +1,13 @@
 import pygame
 
-ANCHO = 800
 ALTO = 600
+ANCHO = 800
+ALTO_PALA = 100
+ANCHO_PALA = 20
+MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
+COLOR_OBJETOS = (200, 200, 200)
 
 class Pong:
 
@@ -13,27 +17,27 @@ class Pong:
 
     def jugar(self):
         salir = False
-        cont = 0
 
         while not salir:
             # Bucle principal (main loop)
-
-            cont = cont + 1
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
-                    print("Se ha cerrado la ventana")
                     salir = True
-
-                # print("Se ha producido un evento del tipo:", evento)
 
             # renderizar mis objetos
 
             # 1. borrar la pantalla
             pygame.draw.rect(self.pantalla, COLOR_FONDO, ((0,0), (ANCHO, ALTO)))
             
-            # 2. pintar los objetos en su nueva posición
-            rectangulo = pygame.Rect(50, 100, 300, 150)
-            pygame.draw.rect(self.pantalla, (cont % 255, 68, 158), rectangulo)
+            # 2. pintar jugador 1 (izquierda)
+            arriba = (ALTO - ALTO_PALA) / 2
+            jugador1 = pygame.Rect(MARGEN, arriba, ANCHO_PALA, ALTO_PALA)
+            pygame.draw.rect(self.pantalla, COLOR_OBJETOS, jugador1)
+
+            # 3. pintar jugador 2 (derecha)
+            izquierda = ANCHO - MARGEN - ANCHO_PALA
+            jugador2 = pygame.Rect(izquierda, arriba, ANCHO_PALA, ALTO_PALA)
+            pygame.draw.rect(self.pantalla, COLOR_OBJETOS, jugador2)
 
             # mostrar los cambios en la pantalla
             pygame.display.flip()
