@@ -8,12 +8,9 @@ MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
 COLOR_OBJETOS = (200, 200, 200)
-VEL_JUGADOR = 2
+VEL_JUGADOR = 10
+FPS = 40
 
-"""
-J1: A,Z
-J2: ARR, ABJ
-"""
 
 class Pintable(pygame.Rect):
 
@@ -58,7 +55,10 @@ class Pong:
 
     def __init__(self):
         pygame.init()
+
         self.pantalla = pygame.display.set_mode((ANCHO,ALTO))
+        self.reloj = pygame.time.Clock()
+
         self.pelota = Pelota()
         self.jugador1 = Jugador(MARGEN)
         self.jugador2 = Jugador(ANCHO - MARGEN - ANCHO_PALA)
@@ -102,6 +102,7 @@ class Pong:
 
             # mostrar los cambios en la pantalla
             pygame.display.flip()
+            self.reloj.tick(FPS)
 
         pygame.quit()
 
