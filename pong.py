@@ -8,8 +8,8 @@ ALTO_PALA = 100
 ANCHO_PALA = 20
 MARGEN = 30
 
-COLOR_FONDO = (0, 0, 0)
-COLOR_OBJETOS = (200, 200, 200)
+COLOR_FONDO = (50, 100, 50)
+COLOR_OBJETOS = (100, 200, 200)
 VEL_JUGADOR = 10  # un jugador se mueve a 10 px cada 1/40 de segundo
 FPS = 40
 
@@ -104,7 +104,8 @@ class Pong:
             # renderizar mis objetos
 
             # 1. borrar la pantalla
-            pygame.draw.rect(self.pantalla, COLOR_FONDO, ((0,0), (ANCHO, ALTO)))
+            # pygame.draw.rect(self.pantalla, COLOR_FONDO, ((0,0), (ANCHO, ALTO)))
+            self.pantalla.fill(COLOR_FONDO)
             
             # 2. pintar jugador 1 (izquierda)
             self.jugador1.pintame(self.pantalla)
