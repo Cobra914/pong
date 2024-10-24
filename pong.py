@@ -1,4 +1,6 @@
+from random import randint
 import pygame
+
 
 ALTO = 600
 ANCHO = 800
@@ -8,9 +10,10 @@ MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
 COLOR_OBJETOS = (200, 200, 200)
-VEL_JUGADOR = 10
+VEL_JUGADOR = 10  # un jugador se mueve a 10 px cada 1/40 de segundo
 FPS = 40
 
+VEL_PELOTA = 10
 
 class Pintable(pygame.Rect):
 
@@ -32,6 +35,8 @@ class Pelota(Pintable):
             (ALTO - self.tam_pelota) / 2,
             self.tam_pelota,
             self.tam_pelota)
+        self.vel_x = randint(-VEL_PELOTA, VEL_PELOTA)
+        self.vel_y = randint(-VEL_PELOTA, VEL_PELOTA)
 
 class Jugador(Pintable):
 
@@ -97,7 +102,10 @@ class Pong:
             # 4. pintar la red
             self.pintar_red()
 
-            # 5. pintar la pelota
+            # 5. calculamos posición y luego pintar la pelota
+            self.pelota.x += self.pelota.vel_x
+            self.pelota.y += self.pelota.vel_y
+
             self.pelota.pintame(self.pantalla)
 
             # mostrar los cambios en la pantalla
