@@ -119,6 +119,10 @@ class Pong:
             # 5. calculamos posición y luego pintar la pelota
             self.pelota.mover()
             self.pelota.pintame(self.pantalla)
+            
+            # comprobar colisión pelota con jugadores
+            if self.pelota.colliderect(self.jugador1) or self.pelota.colliderect(self.jugador2):
+                self.pelota.vel_x = -self.pelota.vel_x
 
             # mostrar los cambios en la pantalla
             pygame.display.flip()
