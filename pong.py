@@ -51,6 +51,22 @@ class Pelota(Pintable):
         if self.y >= (ALTO - self.tam_pelota):
                 self.vel_y = -self.vel_y
 
+        # Rebote pelota en jugadores
+        if self.x <= 0:
+            self.reiniciar(True)
+           
+        if self.x >= (ANCHO - self.tam_pelota):
+            self.reiniciar(False)
+
+    def reiniciar(self, haciaIzquierda):
+        self.x = (ANCHO - self.tam_pelota) / 2
+        self.y = (ALTO - self.tam_pelota) / 2
+        self.vel_y = randint(-VEL_PELOTA, VEL_PELOTA)
+        if haciaIzquierda:
+            self.vel_x = randint(-VEL_PELOTA, -1)
+        else:
+            randint(1, VEL_PELOTA)
+
 class Jugador(Pintable):
 
     def __init__(self, x):
