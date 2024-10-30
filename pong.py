@@ -53,10 +53,13 @@ class Pelota(Pintable):
 
         # Rebote pelota en jugadores
         if self.x <= 0:
-            self.reiniciar(True)
-           
+            self.reiniciar(True) 
+            return 2
         if self.x >= (ANCHO - self.tam_pelota):
             self.reiniciar(False)
+            return 1
+        return 0
+
 
     def reiniciar(self, haciaIzquierda):
         self.x = (ANCHO - self.tam_pelota) / 2
@@ -121,6 +124,7 @@ class Pong:
         self.pelota = Pelota()
         self.jugador1 = Jugador(MARGEN)
         self.jugador2 = Jugador(ANCHO - MARGEN - ANCHO_PALA)
+        self.marcador = Marcador()
 
     def jugar(self):
         salir = False
@@ -158,12 +162,22 @@ class Pong:
             self.pintar_red()
 
             # 5. calculamos posición y luego pintar la pelota
-            self.pelota.mover()
+            punto_para = self.pelota.mover()
             self.pelota.pintame(self.pantalla)
             
             # comprobar colisión pelota con jugadores
             if self.pelota.colliderect(self.jugador1) or self.pelota.colliderect(self.jugador2):
                 self.pelota.vel_x = -self.pelota.vel_x
+
+            # incrementa, comprueba y pinta marcador
+            if punto_para in (1,2):
+                self.marcador.incrementar(punto_para)
+                ganador = self.marcador.quien_gana()
+                if 1 <= ganador <= 2:
+                    print(f"El jugador {ganador} Ha ganado la partida.")
+                    self.pelota.vel_x = self.pelota.vel_y = 0
+
+            self.marcador.pintame()
 
             # mostrar los cambios en la pantalla
             pygame.display.flip()
