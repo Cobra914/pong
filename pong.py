@@ -85,6 +85,31 @@ class Jugador(Pintable):
         if self.y > posicion_maxima:
             self.y = posicion_maxima
 
+class Marcador:
+    
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.puntuacion = [0, 0]
+
+    def pintame(self):
+        # TODO pintar el marcador en pantalla
+        print('Marcador:', self.puntuacion)
+
+    def incrementar(self, jugador):
+        if jugador in (1, 2):
+            self.puntuacion[jugador - 1] += 1
+
+    def quien_gana(self):
+        # TODO números mágicos?
+        if self.puntuacion[0] == 9:
+            return 1
+        if self.puntuacion[1] == 9:
+            return 2
+        return 0
+
+
 class Pong:
 
     def __init__(self):
