@@ -121,15 +121,15 @@ class Marcador:
         # y = MARGEN
         # pantalla.blit(img_texto, (x,y))
 
-        cuarto = 1
+        n = 1
         for punto in self.puntuacion:
             puntuacion = str(punto)
             img_texto = self.tipo_letra.render(puntuacion, False, COLOR_OBJETOS)
             ancho_img = img_texto.get_width()
-            x = cuarto/4 * ANCHO - ancho_img/2
+            x = n/4 * ANCHO - ancho_img/2
             y = MARGEN
             pantalla.blit(img_texto, (x,y))
-            cuarto += 2
+            n += 2
 
 
     def incrementar(self, jugador):
