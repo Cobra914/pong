@@ -10,12 +10,14 @@ MARGEN = 30
 
 COLOR_FONDO = (0, 0, 0)
 COLOR_OBJETOS = (200, 200, 200)
+COLOR_MSJ = (255, 255, 255)
 VEL_JUGADOR = 10  # un jugador se mueve a 10 px cada 1/40 de segundo
 FPS = 40
 
 VEL_PELOTA = 10
 
 TAM_LETRA_MARCADOR = 105
+TAM_LETRA_MSJ = 40
 
 class Pintable(pygame.Rect):
 
@@ -145,6 +147,38 @@ class Marcador:
         return 0
 
 
+class Mensaje:
+
+    def __init__(self):
+        self.preparar_tipografia()
+
+    def preparar_tipografia(self):
+        tipos = pygame.font.get_default_font()
+        letra = "ArialBlack"
+
+        if letra not in tipos:
+            letra = pygame.font.get_default_font()
+        self.tipo_letra = pygame.font.SysFont(letra, TAM_LETRA_MSJ, True)
+
+    def pintame_ganador(self, pantalla, jugador_ganador):
+        msj = f'El jugador {jugador_ganador} ha ganado la partida'
+        img_texto = self.tipo_letra.render(msj, True, COLOR_MSJ)
+        ancho_msj = img_texto.get_width()
+        pos_x = 1/2 * (ANCHO - ancho_msj)
+        pos_y = (ALTO / 2) + 15
+        pantalla.blit(img_texto, (pos_x, pos_y))
+
+    def pintame_msj(self, pantalla):
+        msj = 'Empezar una nueva partido? (S/N)'
+        img_texto = self.tipo_letra.render(msj, True, COLOR_MSJ)
+        ancho_msj = img_texto.get_width()
+        pos_x = 1/2 * (ANCHO - ancho_msj)
+        pos_y = (ALTO / 2) - 45
+        pantalla.blit(img_texto, (pos_x, pos_y))
+
+
+
+
 class Pong:
 
     def __init__(self):
@@ -157,6 +191,7 @@ class Pong:
         self.jugador1 = Jugador(MARGEN)
         self.jugador2 = Jugador(ANCHO - MARGEN - ANCHO_PALA)
         self.marcador = Marcador()
+        self.mensaje = Mensaje()
 
     def jugar(self):
         salir = False
@@ -204,12 +239,18 @@ class Pong:
             # incrementa, comprueba y pinta marcador
             if punto_para in (1,2):
                 self.marcador.incrementar(punto_para)
-                ganador = self.marcador.quien_gana()
-                if 1 <= ganador <= 2:
-                    print(f"El jugador {ganador} Ha ganado la partida.")
-                    self.pelota.vel_x = self.pelota.vel_y = 0
+            
+            ganador = self.marcador.quien_gana()
+            if 1 <= ganador <= 2:
+                # print(f"El jugador {ganador} Ha ganado la partida.")
+                self.pelota.vel_x = self.pelota.vel_y = 0
+                self.mensaje.pintame_ganador(self.pantalla, ganador)
 
+
+            
             self.marcador.pintame(self.pantalla)
+
+            
 
             # mostrar los cambios en la pantalla
             pygame.display.flip()
