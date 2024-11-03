@@ -165,15 +165,15 @@ class Mensaje:
         img_texto = self.tipo_letra.render(msj, True, COLOR_MSJ)
         ancho_msj = img_texto.get_width()
         pos_x = 1/2 * (ANCHO - ancho_msj)
-        pos_y = (ALTO / 2) + 15
+        pos_y = (ALTO / 2) - 15
         pantalla.blit(img_texto, (pos_x, pos_y))
 
     def pintame_msj(self, pantalla):
-        msj = 'Empezar una nueva partido? (S/N)'
+        msj = 'Empezar una nueva partida? (S/N)'
         img_texto = self.tipo_letra.render(msj, True, COLOR_MSJ)
         ancho_msj = img_texto.get_width()
         pos_x = 1/2 * (ANCHO - ancho_msj)
-        pos_y = (ALTO / 2) - 45
+        pos_y = (ALTO / 2) + 30
         pantalla.blit(img_texto, (pos_x, pos_y))
 
 
@@ -201,6 +201,14 @@ class Pong:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT or (evento.type == pygame.KEYUP and evento.key == pygame.K_ESCAPE):
                     salir = True
+
+                if (self.pelota.vel_x == 0) and (self.pelota.vel_y == 0):
+                    if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_s):
+                        print('empieza de vuelta')
+                        
+                    if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_n):
+                        salir = True
+
 
             # movimiento jugador    
             estado_teclas = pygame.key.get_pressed()
@@ -245,10 +253,11 @@ class Pong:
                 # print(f"El jugador {ganador} Ha ganado la partida.")
                 self.pelota.vel_x = self.pelota.vel_y = 0
                 self.mensaje.pintame_ganador(self.pantalla, ganador)
+                self.mensaje.pintame_msj(self.pantalla)
 
 
-            
             self.marcador.pintame(self.pantalla)
+
 
             
 
