@@ -204,7 +204,11 @@ class Pong:
 
                 if (self.pelota.vel_x == 0) and (self.pelota.vel_y == 0):
                     if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_s):
-                        print('empieza de vuelta')
+                        self.pelota = Pelota()
+                        self.jugador1 = Jugador(MARGEN)
+                        self.jugador2 = Jugador(ANCHO - MARGEN - ANCHO_PALA)
+                        self.marcador = Marcador()
+                        self.mensaje = Mensaje()
                         
                     if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_n):
                         salir = True
