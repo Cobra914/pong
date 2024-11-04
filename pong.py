@@ -17,7 +17,7 @@ FPS = 40
 VEL_PELOTA = 10
 
 TAM_LETRA_MARCADOR = 105
-TAM_LETRA_MSJ = 40
+TAM_LETRA_MSJ = 30
 
 class Pintable(pygame.Rect):
 
@@ -26,7 +26,6 @@ class Pintable(pygame.Rect):
 
     def pintame(self, pantalla):
         pygame.draw.rect(pantalla, COLOR_OBJETOS, self)
-
 
 class Pelota(Pintable):
 
@@ -146,19 +145,18 @@ class Marcador:
             return 2
         return 0
 
-
 class Mensaje:
 
     def __init__(self):
         self.preparar_tipografia()
 
     def preparar_tipografia(self):
-        tipos = pygame.font.get_default_font()
-        letra = "ArialBlack"
+        tipos = pygame.font.get_fonts()
+        letra = "arialblack"
 
         if letra not in tipos:
             letra = pygame.font.get_default_font()
-        self.tipo_letra = pygame.font.SysFont(letra, TAM_LETRA_MSJ, True)
+        self.tipo_letra = pygame.font.SysFont(letra, TAM_LETRA_MSJ, False)
 
     def pintame_ganador(self, pantalla, jugador_ganador):
         msj = f'El jugador {jugador_ganador} ha ganado la partida'
@@ -175,9 +173,6 @@ class Mensaje:
         pos_x = 1/2 * (ANCHO - ancho_msj)
         pos_y = (ALTO / 2) + 30
         pantalla.blit(img_texto, (pos_x, pos_y))
-
-
-
 
 class Pong:
 
